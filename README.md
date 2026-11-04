@@ -35,7 +35,9 @@ and the page shows an error in the status area.
 ### Expected API shapes
 
 - `GET /api/items` returns an array of items (or `{ "items": [...] }`). Each item is
-  displayed using its `name` (falling back to `title`, then the raw JSON).
+  displayed using its `name` (falling back to `title`, then the raw JSON). If an item
+  includes a numeric `discountedPrice` (from the API's `applyDiscount`), it is shown
+  after the name, with the original `price` struck through when present.
 - `POST /api/items` accepts `{ "name": "<string>" }` and returns a 2xx status on success.
   After a successful add, the list is reloaded.
 
@@ -54,3 +56,5 @@ Key elements carry `data-testid` attributes for testing:
 | `empty-state`       | "No items yet." message (hidden when items exist)              |
 | `item-list`         | The `<ul>` of items (`data-count` = number of items)           |
 | `item`              | Each `<li>` (`data-item-id` = item `id` when present)          |
+| `item-discounted-price` | Discounted price on an item (only when `discountedPrice` is set) |
+| `item-original-price`   | Original price, struck through (only when `price` differs)     |

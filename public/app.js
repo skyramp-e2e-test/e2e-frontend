@@ -16,6 +16,29 @@ function itemLabel(item) {
   return item.name ?? item.title ?? JSON.stringify(item);
 }
 
+function formatPrice(value) {
+  return typeof value === 'number' && Number.isFinite(value) ? `$${value.toFixed(2)}` : null;
+}
+
+// Discounted price as computed by the API's applyDiscount (item.discountedPrice).
+function priceElement(item) {
+  if (!item || typeof item !== 'object') return null;
+  const discounted = formatPrice(item.discountedPrice);
+  if (!discounted) return null;
+  const span = document.createElement('span');
+  span.className = 'price';
+  span.dataset.testid = 'item-discounted-price';
+  span.textContent = ` — ${discounted}`;
+  const original = formatPrice(item.price);
+  if (original && item.price !== item.discountedPrice) {
+    const was = document.createElement('s');
+    was.dataset.testid = 'item-original-price';
+    was.textContent = original;
+    span.append(' (was ', was, ')');
+  }
+  return span;
+}
+
 function render(items) {
   list.replaceChildren();
   items.forEach((item, index) => {
@@ -24,6 +47,8 @@ function render(items) {
     if (item && item.id != null) li.dataset.itemId = item.id;
     li.dataset.index = index;
     li.textContent = itemLabel(item);
+    const price = priceElement(item);
+    if (price) li.appendChild(price);
     list.appendChild(li);
   });
   emptyState.hidden = items.length > 0;
