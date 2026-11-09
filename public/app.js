@@ -18,9 +18,14 @@ function itemLabel(item) {
   return item.name ?? item.title ?? JSON.stringify(item);
 }
 
+function sortByName(items) {
+  return [...items].sort((a, b) =>
+    itemLabel(a).localeCompare(itemLabel(b), undefined, { sensitivity: 'base', numeric: true }));
+}
+
 function render(items) {
   list.replaceChildren();
-  items.forEach((item, index) => {
+  sortByName(items).forEach((item, index) => {
     const li = document.createElement('li');
     li.dataset.testid = 'item';
     if (item && item.id != null) li.dataset.itemId = item.id;

@@ -36,7 +36,8 @@ and the page shows an error in the status area.
 ### Expected API shapes
 
 - `GET /api/items` returns an array of items (or `{ "items": [...] }`). Each item is
-  displayed using its `name` (falling back to `title`, then the raw JSON).
+  displayed using its `name` (falling back to `title`, then the raw JSON), and the list
+  is sorted by that label A–Z (case-insensitive).
 - `POST /api/items` accepts `{ "name": "<string>" }` and returns a 2xx status on success.
   After a successful add, the list is reloaded.
 - `GET /api/items/count` returns `{ "count": <number> }` (also accepts `{ "total": <number> }`
@@ -59,4 +60,4 @@ Key elements carry `data-testid` attributes for testing:
 | `status`            | Status/error message (`data-state` is `ok` or `error`)         |
 | `empty-state`       | "No items yet." message (hidden when items exist)              |
 | `item-list`         | The `<ul>` of items (`data-count` = number of items)           |
-| `item`              | Each `<li>` (`data-item-id` = item `id` when present)          |
+| `item`              | Each `<li>` in A–Z order (`data-item-id` = item `id` when present, `data-index` = sorted position) |
