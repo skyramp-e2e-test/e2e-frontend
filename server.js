@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Proxy /api/items to the backend so the browser never needs CORS.
+// Proxy /api/items* to the backend so the browser never needs CORS.
 async function proxy(req, res) {
   try {
     const init = { method: req.method, headers: { Accept: 'application/json' } };
@@ -16,7 +16,7 @@ async function proxy(req, res) {
       init.headers['Content-Type'] = 'application/json';
       init.body = JSON.stringify(req.body ?? {});
     }
-    const upstream = await fetch(`${API_BASE_URL}/api/items`, init);
+    const upstream = await fetch(`${API_BASE_URL}${req.path}`, init);
     const text = await upstream.text();
     res.status(upstream.status);
     res.type(upstream.headers.get('content-type') || 'application/json');
@@ -27,6 +27,7 @@ async function proxy(req, res) {
 }
 
 app.get('/api/items', proxy);
+app.get('/api/items/count', proxy);
 app.post('/api/items', proxy);
 
 app.get('/healthz', (req, res) => res.json({ ok: true, apiBaseUrl: API_BASE_URL }));
