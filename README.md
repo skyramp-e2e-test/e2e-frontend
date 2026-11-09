@@ -5,8 +5,9 @@ an API and lets you add new ones.
 
 - `GET /api/items` — shown as a list
 - `POST /api/items` with `{"name": "..."}` — sent by the "Add" form
+- `GET /api/items/count` — shown as "Total items" above the list
 
-The Express server proxies `/api/items` to the API at `API_BASE_URL`, so the browser
+The Express server proxies `/api/items` and `/api/items/count` to the API at `API_BASE_URL`, so the browser
 talks only to the frontend's origin and the API does not need CORS.
 
 ## Requirements
@@ -38,6 +39,9 @@ and the page shows an error in the status area.
   displayed using its `name` (falling back to `title`, then the raw JSON).
 - `POST /api/items` accepts `{ "name": "<string>" }` and returns a 2xx status on success.
   After a successful add, the list is reloaded.
+- `GET /api/items/count` returns `{ "count": <number> }` (also accepts `{ "total": <number> }`
+  or a bare number). It is fetched on page load and after each add; on failure the
+  count shows "unavailable".
 
 ## Test IDs
 
@@ -47,6 +51,8 @@ Key elements carry `data-testid` attributes for testing:
 | ------------------- | -------------------------------------------------------------- |
 | `app`               | Main container                                                 |
 | `page-title`        | Page heading                                                   |
+| `item-count`        | Total count line (`data-count` = count, `data-state` = `ok`/`error`) |
+| `item-count-value`  | The count number (or "unavailable")                            |
 | `add-item-form`     | The add-item form                                              |
 | `item-name-input`   | Name text input                                                |
 | `add-item-submit`   | Submit button                                                  |

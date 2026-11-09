@@ -15,11 +15,13 @@
     .status { min-height: 1.4em; margin-bottom: 1rem; }
     .error { color: #b00020; }
     .empty { color: #777; }
+    .count { color: #555; margin-bottom: 1rem; }
   </style>
 </head>
 <body>
   <main data-testid="app">
     <h1 data-testid="page-title">Items</h1>
+    <p class="count" data-testid="item-count" id="item-count">Total items: <span data-testid="item-count-value" id="item-count-value">…</span></p>
 
     <form data-testid="add-item-form" id="add-item-form">
       <input data-testid="item-name-input" id="item-name" name="name" placeholder="Item name" required autocomplete="off">

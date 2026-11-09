@@ -3,6 +3,8 @@ const input = document.getElementById('item-name');
 const list = document.getElementById('item-list');
 const statusEl = document.getElementById('status');
 const emptyState = document.getElementById('empty-state');
+const countEl = document.getElementById('item-count');
+const countValue = document.getElementById('item-count-value');
 
 function setStatus(message, isError = false) {
   statusEl.textContent = message;
@@ -39,8 +41,26 @@ async function readError(res) {
   }
 }
 
+async function loadCount() {
+  try {
+    const res = await fetch('/api/items/count');
+    if (!res.ok) throw new Error(await readError(res));
+    const data = await res.json();
+    const count = typeof data === 'number' ? data : (data.count ?? data.total);
+    if (typeof count !== 'number') throw new Error('Unexpected response');
+    countValue.textContent = String(count);
+    countEl.dataset.count = count;
+    countEl.dataset.state = 'ok';
+  } catch {
+    countValue.textContent = 'unavailable';
+    delete countEl.dataset.count;
+    countEl.dataset.state = 'error';
+  }
+}
+
 async function loadItems() {
   setStatus('Loading…');
+  loadCount();
   try {
     const res = await fetch('/api/items');
     if (!res.ok) throw new Error(await readError(res));
