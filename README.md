@@ -3,7 +3,7 @@
 A small web frontend (Node.js + Express serving static HTML/JS) that lists items from
 an API and lets you add new ones.
 
-- `GET /api/items` — shown as a list
+- `GET /api/items` — shown as a list (re-fetched by the "Refresh" button)
 - `POST /api/items` with `{"name": "..."}` — sent by the "Add" form
 - `GET /api/items/count` — shown as "Total items" above the list
 
@@ -56,6 +56,7 @@ Key elements carry `data-testid` attributes for testing:
 | `add-item-form`     | The add-item form                                              |
 | `item-name-input`   | Name text input                                                |
 | `add-item-submit`   | Submit button                                                  |
+| `refresh-button`    | Re-fetches `GET /api/items` and re-renders the list (disabled while loading) |
 | `status`            | Status/error message (`data-state` is `ok` or `error`)         |
 | `empty-state`       | "No items yet." message (hidden when items exist)              |
 | `item-list`         | The `<ul>` of items (`data-count` = number of items)           |

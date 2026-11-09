@@ -5,6 +5,7 @@ const statusEl = document.getElementById('status');
 const emptyState = document.getElementById('empty-state');
 const countEl = document.getElementById('item-count');
 const countValue = document.getElementById('item-count-value');
+const refreshButton = document.getElementById('refresh-button');
 
 function setStatus(message, isError = false) {
   statusEl.textContent = message;
@@ -92,6 +93,15 @@ form.addEventListener('submit', async (event) => {
     setStatus(`Failed to add item: ${err.message}`, true);
   } finally {
     form.querySelector('button').disabled = false;
+  }
+});
+
+refreshButton.addEventListener('click', async () => {
+  refreshButton.disabled = true;
+  try {
+    await loadItems();
+  } finally {
+    refreshButton.disabled = false;
   }
 });
 

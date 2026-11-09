@@ -16,6 +16,7 @@
     .error { color: #b00020; }
     .empty { color: #777; }
     .count { color: #555; margin-bottom: 1rem; }
+    #refresh-button { margin-bottom: 1rem; }
   </style>
 </head>
 <body>
@@ -27,6 +28,8 @@
       <input data-testid="item-name-input" id="item-name" name="name" placeholder="Item name" required autocomplete="off">
       <button data-testid="add-item-submit" type="submit">Add</button>
     </form>
+
+    <button data-testid="refresh-button" id="refresh-button" type="button">Refresh</button>
 
     <div class="status" data-testid="status" id="status" role="status" aria-live="polite"></div>
 
