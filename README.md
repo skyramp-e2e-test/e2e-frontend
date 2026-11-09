@@ -6,6 +6,7 @@ an API and lets you add new ones.
 - `GET /api/items` — shown as a list
 - `POST /api/items` with `{"name": "..."}` — sent by the "Add" form
 - `GET /api/items/count` — shown as "Total items" above the list
+- `GET /api/health` — proxied to the API's `GET /health`; the JSON is returned unchanged
 
 The Express server proxies `/api/items` and `/api/items/count` to the API at `API_BASE_URL`, so the browser
 talks only to the frontend's origin and the API does not need CORS.
