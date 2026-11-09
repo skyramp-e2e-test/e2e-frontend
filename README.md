@@ -3,7 +3,8 @@
 A small web frontend (Node.js + Express serving static HTML/JS) that lists items from
 an API and lets you add new ones.
 
-- `GET /api/items` — shown as a list
+- `GET /api/items` — shown as a list (the proxy forwards the `limit` and `offset` query
+  parameters to the API; other query parameters are dropped)
 - `POST /api/items` with `{"name": "..."}` — sent by the "Add" form
 - `GET /api/items/count` — shown as "Total items" above the list
 
