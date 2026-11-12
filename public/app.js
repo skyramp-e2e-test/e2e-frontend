@@ -18,6 +18,18 @@ function itemLabel(item) {
   return item.name ?? item.title ?? JSON.stringify(item);
 }
 
+const DISCOUNT_PERCENT = 10;
+
+function discountedPrice(price, percent = DISCOUNT_PERCENT) {
+  return Math.round(price * (1 - percent / 100) * 100) / 100;
+}
+
+function priceLabel(item) {
+  const price = item && typeof item === 'object' ? Number(item.price) : NaN;
+  if (item?.price == null || !Number.isFinite(price)) return '';
+  return ` — $${price.toFixed(2)} (discounted: $${discountedPrice(price).toFixed(2)})`;
+}
+
 function render(items) {
   list.replaceChildren();
   items.forEach((item, index) => {
@@ -25,7 +37,7 @@ function render(items) {
     li.dataset.testid = 'item';
     if (item && item.id != null) li.dataset.itemId = item.id;
     li.dataset.index = index;
-    li.textContent = itemLabel(item);
+    li.textContent = itemLabel(item) + priceLabel(item);
     list.appendChild(li);
   });
   emptyState.hidden = items.length > 0;
