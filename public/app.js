@@ -14,7 +14,7 @@ function setStatus(message, isError = false) {
 
 function itemLabel(item) {
   if (item == null) return '';
-  if (typeof item !== 'object') return String(item);
+  if (typeof item !== 'object') return String(item).trim();
   return item.name ?? item.title ?? JSON.stringify(item);
 }
 
